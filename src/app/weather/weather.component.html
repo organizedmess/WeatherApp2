@@ -1,0 +1,51 @@
+   <div class="container m-4">
+    <h2 class="text-center">Weather Report</h2>
+
+    <div *ngIf="!location && !weatherData" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <img src="../../assets/loading.png" alt="loading picture" class="img-fluid">
+      </div>
+    <div class="row">
+      <div class="col-md-6">
+        <form [formGroup]="cityForm" class="mb-4">
+          <div class="input-group">
+            <input id="city" type="text" class="form-control" formControlName="city" typeaheadOptionField="name" placeholder="Enter city name...">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button" (click)="search()">Search</button>
+            </div>
+          </div>
+        </form>
+
+        
+          
+        <div *ngIf="location && weatherData" class="weather-card text-center p-4 mb-4">
+            <h2>Location: {{ location.name }}, {{ location.country }}</h2>
+            <h3>{{ weatherData.condition.text }}</h3>
+            <img [src]="weatherData.condition.icon" alt="weather icon" class="img-fluid">
+            <p>Temperature: {{ weatherData.temp_c }}°C / {{ weatherData.temp_f }}°F</p>
+            <p>Wind: {{ weatherData.wind_kph }} km/h</p>
+            <p>Humidity: {{ weatherData.humidity }}%</p>
+          </div>
+          
+
+      </div>
+      <div class="col-md-6">
+        <div *ngIf="forecast">
+          <h2 class="text-center">Forecast</h2>
+          <div class="row text-center">
+            <div *ngFor="let weather of forecast.forecastday" class="col-md-4 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">{{ weather.date }}</h5>
+                  <img [src]="weather.day.condition.icon" alt="weather icon" class="img-fluid mb-2">
+                  <p class="card-text">Max Temp: {{ weather.day.maxtemp_c }} °C</p>
+                  <p class="card-text">Min Temp: {{ weather.day.mintemp_c }} °C</p>
+                  <p class="card-text">Avg Temp: {{ weather.day.avgtemp_c }} °C / {{ weather.day.avgtemp_f }} °F</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
